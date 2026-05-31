@@ -1,0 +1,31 @@
+# Copiar a repo aubot-trading en la raíz tras crear el repo en GitHub
+name: aubot-api
+type: web
+
+build:
+  docker:
+    dockerfile: Dockerfile
+
+ports:
+  - port: 8080
+    protocol: http
+
+routes:
+  - path: /
+    port: 8080
+
+health_checks:
+  - http:
+      path: /health
+      port: 8080
+      interval: 30s
+      timeout: 10s
+
+env:
+  - name: AUBOT_AUTO_START
+    value: "true"
+  - name: AUBOT_TICK_MS
+    value: "1000"
+  - name: BINANCE_TESTNET
+    value: "true"
+  # Secrets en panel: BINANCE_API_KEY, BINANCE_API_SECRET
